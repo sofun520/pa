@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.springmvc.dao.AccountMapper">
+	<resultMap id="BaseResultMap" type="cn.springmvc.model.Account">
+		<id column="a_id" property="aId" jdbcType="INTEGER" />
+		<result column="a_amount" property="aAmount" jdbcType="DECIMAL" />
+		<result column="a_remark" property="aRemark" jdbcType="VARCHAR" />
+		<result column="a_date" property="aDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		a_id, a_amount, a_remark, a_date
+	</sql>
+
+	<select id="find" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from account
+		where a_id = #{aId,jdbcType=INTEGER}
+	</select>
+
+	<select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from account
+		<if test="pageSize != null">
+			limit #{startIndex},#{pageSize}
+		</if>
+	</select>
+
+	<select id="count" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select
+		count(*)
+		from account
+	</select>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from account
+		where a_id
+		= #{aId,jdbcType=INTEGER}
+	</delete>
+
+
+
+	<insert id="insert" parameterType="cn.springmvc.model.Account">
+		insert into account
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="aId != null">
+				a_id,
+			</if>
+			<if test="aAmount != null">
+				a_amount,
+			</if>
+			<if test="aRemark != null">
+				a_remark,
+			</if>
+			<if test="aDate != null">
+				a_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="aId != null">
+				#{aId,jdbcType=INTEGER},
+			</if>
+			<if test="aAmount != null">
+				#{aAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="aRemark != null">
+				#{aRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="aDate != null">
+				#{aDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="update" parameterType="cn.springmvc.model.Account">
+		update account
+		<set>
+			<if test="aAmount != null">
+				a_amount = #{aAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="aRemark != null">
+				a_remark = #{aRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="aDate != null">
+				a_date = #{aDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where a_id = #{aId,jdbcType=INTEGER}
+	</update>
+
+
+</mapper>
