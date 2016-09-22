@@ -94,7 +94,7 @@ public class JhacUserController {
 		JhacUser user = su.getSession(request, "user");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("user", user);
-		return new ModelAndView("main", map);
+		return new ModelAndView("main2", map);
 	}
 
 	@RequestMapping(value = "/mobileCheckLogin", method = RequestMethod.POST)
