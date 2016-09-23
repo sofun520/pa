@@ -136,7 +136,7 @@
 				}, function(data) {
 					if (data.success == '0') {
 						alert(data.message);
-						window.location.href = 'mvc/main.do';
+						window.location.href = 'mvc/card/query.do';
 					} else {
 						alert(data.message);
 					}
